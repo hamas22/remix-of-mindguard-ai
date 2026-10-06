@@ -1,0 +1,201 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * MindGuard AI — "Serene Plum"
+ * Calming burgundy, dusty rose, warm mauve and cream. Soothing, no cyber-AI feel.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-aurora-violet: var(--aurora-violet);
+  --color-aurora-cyan: var(--aurora-cyan);
+  --color-aurora-magenta: var(--aurora-magenta);
+
+  --color-risk-low: var(--risk-low);
+  --color-risk-medium: var(--risk-medium);
+  --color-risk-high: var(--risk-high);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+
+  --animate-aurora: aurora 22s ease infinite;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Warm blush cream */
+  --background: oklch(0.975 0.01 20);
+  --foreground: oklch(0.24 0.05 350);
+
+  --card: oklch(0.995 0.006 20);
+  --card-foreground: oklch(0.24 0.05 350);
+  --popover: oklch(0.995 0.006 20);
+  --popover-foreground: oklch(0.24 0.05 350);
+
+  /* Deep plum / burgundy */
+  --primary: oklch(0.42 0.12 355);
+  --primary-foreground: oklch(0.99 0.005 20);
+
+  --secondary: oklch(0.94 0.02 350);
+  --secondary-foreground: oklch(0.32 0.08 350);
+
+  --muted: oklch(0.95 0.015 20);
+  --muted-foreground: oklch(0.48 0.04 350);
+
+  /* Dusty mauve */
+  --accent: oklch(0.58 0.1 345);
+  --accent-foreground: oklch(0.99 0.005 20);
+
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.9 0.02 350);
+  --input: oklch(0.92 0.02 350);
+  --ring: oklch(0.55 0.12 350);
+
+  /* Kept legacy names, mapped to the plum family */
+  --aurora-violet: oklch(0.42 0.12 355);
+  --aurora-cyan: oklch(0.72 0.06 40);      /* warm cream */
+  --aurora-magenta: oklch(0.6 0.13 355);   /* rose plum */
+
+  --risk-low: oklch(0.6 0.11 155);
+  --risk-medium: oklch(0.72 0.14 65);
+  --risk-high: oklch(0.55 0.2 25);
+
+  --chart-1: oklch(0.42 0.12 355);
+  --chart-2: oklch(0.6 0.13 355);
+  --chart-3: oklch(0.72 0.09 20);
+  --chart-4: oklch(0.72 0.14 65);
+  --chart-5: oklch(0.55 0.2 25);
+
+  --gradient-primary: linear-gradient(135deg, oklch(0.42 0.12 355), oklch(0.55 0.14 355), oklch(0.7 0.09 20));
+  --gradient-primary-soft: linear-gradient(135deg, oklch(0.5 0.13 355 / 0.9), oklch(0.7 0.09 20 / 0.85));
+  --gradient-hero: radial-gradient(ellipse at 20% 10%, oklch(0.88 0.06 350 / 0.7), transparent 55%),
+                   radial-gradient(ellipse at 85% 20%, oklch(0.9 0.05 30 / 0.65), transparent 55%),
+                   radial-gradient(ellipse at 55% 100%, oklch(0.85 0.08 355 / 0.55), transparent 60%),
+                   oklch(0.975 0.01 20);
+  --gradient-mesh: radial-gradient(circle at 15% 25%, oklch(0.85 0.08 355 / 0.35), transparent 45%),
+                   radial-gradient(circle at 85% 15%, oklch(0.88 0.06 30 / 0.3), transparent 45%),
+                   radial-gradient(circle at 55% 90%, oklch(0.86 0.09 355 / 0.3), transparent 50%);
+
+  --shadow-soft: 0 8px 32px -12px oklch(0.42 0.12 355 / 0.28);
+  --shadow-glass: 0 20px 60px -20px oklch(0.42 0.12 355 / 0.25);
+  --shadow-glow: 0 0 40px oklch(0.5 0.14 355 / 0.32);
+  --shadow-glow-cyan: 0 0 40px oklch(0.7 0.09 20 / 0.3);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html, body { background-color: var(--color-background); color: var(--color-foreground); }
+  body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, oklch(0.86 0.08 355 / 0.55), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 100% 40%, oklch(0.88 0.06 30 / 0.45), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 0% 80%, oklch(0.85 0.09 355 / 0.4), transparent 60%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.025em; }
+}
+
+@utility glass {
+  background: color-mix(in oklab, white 72%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 85%, transparent);
+  box-shadow: var(--shadow-glass);
+}
+
+@utility glass-dark {
+  background: color-mix(in oklab, oklch(0.22 0.06 355) 55%, transparent);
+  backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid color-mix(in oklab, white 15%, transparent);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, white 88%, transparent);
+  backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid color-mix(in oklab, white 92%, transparent);
+  box-shadow: var(--shadow-glass);
+}
+
+@utility gradient-hero { background: var(--gradient-hero); }
+@utility gradient-primary { background: var(--gradient-primary); }
+@utility gradient-primary-soft { background: var(--gradient-primary-soft); }
+@utility mesh-bg { background-image: var(--gradient-mesh); }
+
+@utility text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glow { box-shadow: var(--shadow-glow); }
+@utility glow-cyan { box-shadow: var(--shadow-glow-cyan); }
+
+@keyframes aurora {
+  0%, 100% { background-position: 0% 50%; transform: scale(1); }
+  50% { background-position: 100% 50%; transform: scale(1.05); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 24px oklch(0.5 0.14 355 / 0.32); }
+  50% { box-shadow: 0 0 56px oklch(0.5 0.14 355 / 0.55); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-aurora { animation: aurora 22s ease infinite; background-size: 200% 200%; }
+.animate-float { animation: float 8s ease-in-out infinite; }
+.animate-shimmer { animation: shimmer 2.5s linear infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
