@@ -11,6 +11,7 @@ import authHero from "@/assets/auth-hero.jpg";
 const searchSchema = z.object({ mode: z.enum(["signin", "signup"]).optional() });
 
 export const Route = createFileRoute("/auth")({
+  ssr: false,
   validateSearch: searchSchema,
   head: () => ({ meta: [{ title: "Sign in — MindGuard AI" }] }),
   component: AuthPage,

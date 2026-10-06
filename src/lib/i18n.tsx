@@ -281,10 +281,14 @@ const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window === "undefined") return "en";
-    return (localStorage.getItem("mg_lang") as Lang) || "en";
-  });
+  // Always start from "en" on both server and first client render to keep
+  // hydration in sync; restore the saved preference after mount.
+  const [lang, setLangState] = useState<Lang>("en");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("mg_lang");
+    if (saved === "ar" || saved === "en") setLangState(saved);
+  }, []);
 
   useEffect(() => {
     const dir = lang === "ar" ? "rtl" : "ltr";
