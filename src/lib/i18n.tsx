@@ -277,16 +277,16 @@ const DICT: Dict = {
 };
 
 const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string; dir: "ltr" | "rtl" }>({
-  lang: "en", setLang: () => {}, t: (k) => k, dir: "ltr",
+  lang: "ar", setLang: () => {}, t: (k) => k, dir: "rtl",
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Always start from "en" on both server and first client render to keep
+  // Always start from Arabic on both server and first client render to keep
   // hydration in sync; restore the saved preference after mount.
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>("ar");
 
   useEffect(() => {
-    const saved = localStorage.getItem("mg_lang");
+    const saved = localStorage.getItem("powlink_lang");
     if (saved === "ar" || saved === "en") setLangState(saved);
   }, []);
 
@@ -297,7 +297,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [lang]);
 
   const setLang = (l: Lang) => {
-    localStorage.setItem("mg_lang", l);
+    localStorage.setItem("powlink_lang", l);
     setLangState(l);
   };
 

@@ -4,9 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Camera, Save, ArrowLeft, Mail, User as UserIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useLang } from "@/lib/i18n";
+import { Button } from "@/components/ui/button";
+import { pageHead } from "@/lib/powlink";
 
 export const Route = createFileRoute("/_authenticated/profile")({
-  head: () => ({ meta: [{ title: "Your Profile — MindGuard AI" }] }),
+  head: () => pageHead("الملف الشخصي"),
   component: ProfilePage,
 });
 
@@ -98,27 +100,27 @@ function ProfilePage() {
         className="relative overflow-hidden rounded-3xl p-6 sm:p-8"
         style={{
           background:
-            "linear-gradient(135deg, oklch(0.32 0.13 355) 0%, oklch(0.42 0.14 355) 60%, oklch(0.6 0.13 355) 100%)",
+            "var(--primary-gradient)",
         }}
       >
-        <div className="absolute -right-16 -top-16 size-60 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        
         <div className="relative flex flex-col sm:flex-row sm:items-center gap-5">
           <div className="relative shrink-0">
-            <div className="size-24 rounded-2xl overflow-hidden bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white text-3xl font-semibold">
+            <div className="size-24 rounded-2xl overflow-hidden bg-card/20 backdrop-blur border border-border/30 flex items-center justify-center text-primary-foreground text-3xl font-semibold">
               {signedAvatar ? (
                 <img src={signedAvatar} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
                 initial
               )}
             </div>
-            <button
+            <Button
               onClick={() => fileRef.current?.click()}
               disabled={uploading}
-              className="absolute -bottom-2 -right-2 size-9 rounded-full bg-white text-primary shadow-lg flex items-center justify-center hover:scale-105 transition-transform disabled:opacity-60"
+              className="absolute -bottom-2 -right-2 size-9 rounded-full bg-card text-primary shadow-lg flex items-center justify-center hover:scale-105 transition-transform disabled:opacity-60"
               aria-label="Upload avatar"
             >
               {uploading ? <Loader2 className="size-4 animate-spin" /> : <Camera className="size-4" />}
-            </button>
+            </Button>
             <input
               ref={fileRef}
               type="file"
@@ -130,15 +132,15 @@ function ProfilePage() {
               }}
             />
           </div>
-          <div className="text-white min-w-0">
-            <div className="text-xs uppercase tracking-[0.18em] text-white/70">{t("pr.your")}</div>
+          <div className="text-primary-foreground min-w-0">
+            <div className="text-xs uppercase tracking-[0.18em] text-primary-foreground/70">{t("pr.your")}</div>
             <h1 className="text-2xl sm:text-3xl font-semibold mt-1">{fullName || t("pr.welcome")}</h1>
-            <p className="text-white/80 text-sm mt-1 truncate">{email}</p>
+            <p className="text-primary-foreground/80 text-sm mt-1 truncate">{email}</p>
           </div>
         </div>
       </div>
 
-      <div className="rounded-3xl bg-white border border-primary/15 p-6 sm:p-8 shadow-[0_4px_16px_-8px_oklch(0.42_0.12_355_/_0.15)] space-y-5">
+      <div className="rounded-3xl bg-card border border-primary/15 p-6 sm:p-8  space-y-5">
         <h2 className="text-lg font-semibold text-foreground">{t("pr.account")}</h2>
 
         <div>
@@ -151,7 +153,7 @@ function ProfilePage() {
             disabled={loading}
             onChange={(e) => setFullName(e.target.value)}
             placeholder={t("pr.namePh")}
-            className="w-full h-11 rounded-lg px-4 text-sm bg-white border border-primary/20 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+            className="w-full h-11 rounded-lg px-4 text-sm bg-card border border-primary/20 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
           />
         </div>
 
@@ -168,18 +170,18 @@ function ProfilePage() {
         </div>
 
         <div className="flex flex-wrap gap-3 pt-2">
-          <button
+          <Button
             onClick={handleSave}
             disabled={saving || loading}
-            className="inline-flex items-center gap-2 h-11 px-5 rounded-lg text-white text-sm font-medium disabled:opacity-60"
+            className="inline-flex items-center gap-2 h-11 px-5 rounded-lg text-primary-foreground text-sm font-medium disabled:opacity-60"
             style={{
               background:
-                "linear-gradient(135deg, oklch(0.35 0.13 355) 0%, oklch(0.42 0.14 355) 55%, oklch(0.55 0.14 355) 100%)",
+                "var(--primary-gradient)",
             }}
           >
             {saving ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}
             {t("pr.save")}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -9,21 +9,40 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AdoptionRouteImport } from './routes/adoption'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CareGuideRouteImport } from './routes/care-guide'
+import { Route as CasesRouteImport } from './routes/cases'
+import { Route as ClinicsRouteImport } from './routes/clinics'
+import { Route as LostDogsRouteImport } from './routes/lost-dogs'
+import { Route as NewReportRouteImport } from './routes/new-report'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as SheltersRouteImport } from './routes/shelters'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as VolunteersRouteImport } from './routes/volunteers'
 import { Route as AuthenticatedAnalyzeRouteImport } from './routes/_authenticated/analyze'
+import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
+import { Route as DogsIdRouteImport } from './routes/dogs.$id'
 import { Route as AuthenticatedResultsIdRouteImport } from './routes/_authenticated/results.$id'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdoptionRoute = AdoptionRouteImport.update({
+  id: '/adoption',
+  path: '/adoption',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -31,33 +50,54 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const CareGuideRoute = CareGuideRouteImport.update({
+  id: '/care-guide',
+  path: '/care-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const CasesRoute = CasesRouteImport.update({
+  id: '/cases',
+  path: '/cases',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedResourcesRoute = AuthenticatedResourcesRouteImport.update({
-  id: '/resources',
-  path: '/resources',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const ClinicsRoute = ClinicsRouteImport.update({
+  id: '/clinics',
+  path: '/clinics',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const LostDogsRoute = LostDogsRouteImport.update({
+  id: '/lost-dogs',
+  path: '/lost-dogs',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const NewReportRoute = NewReportRouteImport.update({
+  id: '/new-report',
+  path: '/new-report',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SheltersRoute = SheltersRouteImport.update({
+  id: '/shelters',
+  path: '/shelters',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VolunteersRoute = VolunteersRouteImport.update({
+  id: '/volunteers',
+  path: '/volunteers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAnalyzeRoute = AuthenticatedAnalyzeRouteImport.update({
+  id: '/analyze',
+  path: '/analyze',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAssessmentRoute = AuthenticatedAssessmentRouteImport.update({
@@ -65,10 +105,30 @@ const AuthenticatedAssessmentRoute = AuthenticatedAssessmentRouteImport.update({
   path: '/assessment',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedAnalyzeRoute = AuthenticatedAnalyzeRouteImport.update({
-  id: '/analyze',
-  path: '/analyze',
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedResourcesRoute = AuthenticatedResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const DogsIdRoute = DogsIdRouteImport.update({
+  id: '/dogs/$id',
+  path: '/dogs/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedResultsIdRoute = AuthenticatedResultsIdRouteImport.update({
   id: '/results/$id',
@@ -78,103 +138,166 @@ const AuthenticatedResultsIdRoute = AuthenticatedResultsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/adoption': typeof AdoptionRoute
   '/auth': typeof AuthRoute
+  '/care-guide': typeof CareGuideRoute
+  '/cases': typeof CasesRoute
+  '/clinics': typeof ClinicsRoute
+  '/lost-dogs': typeof LostDogsRoute
+  '/new-report': typeof NewReportRoute
+  '/reports': typeof ReportsRoute
+  '/shelters': typeof SheltersRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/volunteers': typeof VolunteersRoute
   '/analyze': typeof AuthenticatedAnalyzeRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/resources': typeof AuthenticatedResourcesRoute
+  '/dogs/$id': typeof DogsIdRoute
   '/results/$id': typeof AuthenticatedResultsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/adoption': typeof AdoptionRoute
   '/auth': typeof AuthRoute
+  '/care-guide': typeof CareGuideRoute
+  '/cases': typeof CasesRoute
+  '/clinics': typeof ClinicsRoute
+  '/lost-dogs': typeof LostDogsRoute
+  '/new-report': typeof NewReportRoute
+  '/reports': typeof ReportsRoute
+  '/shelters': typeof SheltersRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/volunteers': typeof VolunteersRoute
   '/analyze': typeof AuthenticatedAnalyzeRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/resources': typeof AuthenticatedResourcesRoute
+  '/dogs/$id': typeof DogsIdRoute
   '/results/$id': typeof AuthenticatedResultsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/adoption': typeof AdoptionRoute
   '/auth': typeof AuthRoute
+  '/care-guide': typeof CareGuideRoute
+  '/cases': typeof CasesRoute
+  '/clinics': typeof ClinicsRoute
+  '/lost-dogs': typeof LostDogsRoute
+  '/new-report': typeof NewReportRoute
+  '/reports': typeof ReportsRoute
+  '/shelters': typeof SheltersRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/volunteers': typeof VolunteersRoute
   '/_authenticated/analyze': typeof AuthenticatedAnalyzeRoute
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/resources': typeof AuthenticatedResourcesRoute
+  '/dogs/$id': typeof DogsIdRoute
   '/_authenticated/results/$id': typeof AuthenticatedResultsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/adoption'
     | '/auth'
+    | '/care-guide'
+    | '/cases'
+    | '/clinics'
+    | '/lost-dogs'
+    | '/new-report'
+    | '/reports'
+    | '/shelters'
     | '/sitemap.xml'
+    | '/volunteers'
     | '/analyze'
     | '/assessment'
     | '/dashboard'
     | '/history'
     | '/profile'
     | '/resources'
+    | '/dogs/$id'
     | '/results/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/adoption'
     | '/auth'
+    | '/care-guide'
+    | '/cases'
+    | '/clinics'
+    | '/lost-dogs'
+    | '/new-report'
+    | '/reports'
+    | '/shelters'
     | '/sitemap.xml'
+    | '/volunteers'
     | '/analyze'
     | '/assessment'
     | '/dashboard'
     | '/history'
     | '/profile'
     | '/resources'
+    | '/dogs/$id'
     | '/results/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/adoption'
     | '/auth'
+    | '/care-guide'
+    | '/cases'
+    | '/clinics'
+    | '/lost-dogs'
+    | '/new-report'
+    | '/reports'
+    | '/shelters'
     | '/sitemap.xml'
+    | '/volunteers'
     | '/_authenticated/analyze'
     | '/_authenticated/assessment'
     | '/_authenticated/dashboard'
     | '/_authenticated/history'
     | '/_authenticated/profile'
     | '/_authenticated/resources'
+    | '/dogs/$id'
     | '/_authenticated/results/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AdoptionRoute: typeof AdoptionRoute
   AuthRoute: typeof AuthRoute
+  CareGuideRoute: typeof CareGuideRoute
+  CasesRoute: typeof CasesRoute
+  ClinicsRoute: typeof ClinicsRoute
+  LostDogsRoute: typeof LostDogsRoute
+  NewReportRoute: typeof NewReportRoute
+  ReportsRoute: typeof ReportsRoute
+  SheltersRoute: typeof SheltersRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  VolunteersRoute: typeof VolunteersRoute
+  DogsIdRoute: typeof DogsIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -184,39 +307,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/adoption': {
+      id: '/adoption'
+      path: '/adoption'
+      fullPath: '/adoption'
+      preLoaderRoute: typeof AdoptionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/resources': {
-      id: '/_authenticated/resources'
-      path: '/resources'
-      fullPath: '/resources'
-      preLoaderRoute: typeof AuthenticatedResourcesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/care-guide': {
+      id: '/care-guide'
+      path: '/care-guide'
+      fullPath: '/care-guide'
+      preLoaderRoute: typeof CareGuideRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/history': {
-      id: '/_authenticated/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/cases': {
+      id: '/cases'
+      path: '/cases'
+      fullPath: '/cases'
+      preLoaderRoute: typeof CasesRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+    '/clinics': {
+      id: '/clinics'
+      path: '/clinics'
+      fullPath: '/clinics'
+      preLoaderRoute: typeof ClinicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lost-dogs': {
+      id: '/lost-dogs'
+      path: '/lost-dogs'
+      fullPath: '/lost-dogs'
+      preLoaderRoute: typeof LostDogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-report': {
+      id: '/new-report'
+      path: '/new-report'
+      fullPath: '/new-report'
+      preLoaderRoute: typeof NewReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shelters': {
+      id: '/shelters'
+      path: '/shelters'
+      fullPath: '/shelters'
+      preLoaderRoute: typeof SheltersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/volunteers': {
+      id: '/volunteers'
+      path: '/volunteers'
+      fullPath: '/volunteers'
+      preLoaderRoute: typeof VolunteersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/analyze': {
+      id: '/_authenticated/analyze'
+      path: '/analyze'
+      fullPath: '/analyze'
+      preLoaderRoute: typeof AuthenticatedAnalyzeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/assessment': {
@@ -226,12 +398,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAssessmentRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/analyze': {
-      id: '/_authenticated/analyze'
-      path: '/analyze'
-      fullPath: '/analyze'
-      preLoaderRoute: typeof AuthenticatedAnalyzeRouteImport
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/history': {
+      id: '/_authenticated/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/resources': {
+      id: '/_authenticated/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof AuthenticatedResourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/dogs/$id': {
+      id: '/dogs/$id'
+      path: '/dogs/$id'
+      fullPath: '/dogs/$id'
+      preLoaderRoute: typeof DogsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/results/$id': {
       id: '/_authenticated/results/$id'
@@ -269,8 +469,18 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AdoptionRoute: AdoptionRoute,
   AuthRoute: AuthRoute,
+  CareGuideRoute: CareGuideRoute,
+  CasesRoute: CasesRoute,
+  ClinicsRoute: ClinicsRoute,
+  LostDogsRoute: LostDogsRoute,
+  NewReportRoute: NewReportRoute,
+  ReportsRoute: ReportsRoute,
+  SheltersRoute: SheltersRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  VolunteersRoute: VolunteersRoute,
+  DogsIdRoute: DogsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
