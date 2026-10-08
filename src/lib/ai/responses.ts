@@ -49,7 +49,7 @@ export function resolvePowLinkProvider(): PowLinkAiProvider | null {
     return {
       kind: "groq",
       apiKey: groqKey,
-      model: override ?? "llama-3.3-70b-versatile",
+      model: override ?? "qwen/qwen3.8-27b",
       baseURL: "https://api.groq.com/openai/v1",
       headers: {},
     };
