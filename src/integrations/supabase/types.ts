@@ -92,6 +92,54 @@ export type Database = {
         }
         Relationships: []
       }
+      dog_reports: {
+        Row: {
+          address: string
+          collar: string | null
+          created_at: string
+          description: string
+          event_date: string
+          id: string
+          is_emergency: boolean
+          latitude: number | null
+          longitude: number | null
+          marks: string | null
+          photo_path: string
+          report_kind: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          collar?: string | null
+          created_at?: string
+          description: string
+          event_date: string
+          id?: string
+          is_emergency?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          marks?: string | null
+          photo_path: string
+          report_kind: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          collar?: string | null
+          created_at?: string
+          description?: string
+          event_date?: string
+          id?: string
+          is_emergency?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          marks?: string | null
+          photo_path?: string
+          report_kind?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

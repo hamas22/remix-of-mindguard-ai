@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText, type ModelMessage, type UIMessage } from "ai";
+import { stepCountIs, streamText, type ModelMessage, type ToolSet, type UIMessage } from "ai";
 
 import {
   createLovableAiGatewayRunIdFetch,
@@ -12,6 +12,7 @@ export function createPowLinkResponse(
   config: { apiKey: string; model: string },
   messages: ModelMessage[],
   instructions: string,
+  tools?: ToolSet,
 ) {
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
   const provider = createOpenAI({
@@ -28,6 +29,8 @@ export function createPowLinkResponse(
     model: provider.responses(config.model),
     instructions,
     messages,
+    tools,
+    stopWhen: stepCountIs(5),
     abortSignal: request.signal,
     maxRetries: 2,
     providerOptions: {
@@ -54,7 +57,7 @@ export function createPowLinkResponse(
   };
 }
 
-function getSafeAiError(error: unknown) {
+export function getSafeAiError(error: unknown) {
   if (error && typeof error === "object") {
     const candidate = error as { message?: string; data?: unknown; responseBody?: string };
     if (candidate.responseBody) {
@@ -68,4 +71,13 @@ function getSafeAiError(error: unknown) {
     if (candidate.message) return candidate.message;
   }
   return "تعذر إكمال الرد الآن.";
+}
+
+export function createGatewayOpenAI(apiKey: string, fetchImpl: typeof fetch) {
+  return createOpenAI({
+    baseURL: "https://ai.gateway.lovable.dev/v1",
+    apiKey,
+    headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
+    fetch: fetchImpl,
+  });
 }
