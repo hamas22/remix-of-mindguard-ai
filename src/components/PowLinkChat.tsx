@@ -178,7 +178,7 @@ export function PowLinkChat() {
               {status === "submitted" && (
                 <div className="pow-chat-typing" aria-live="polite">
                   <img src={mascot.url} alt="" width={25} height={25} />
-                  <Shimmer>{ar ? "بيكتب..." : "Typing..."}</Shimmer>
+                  <Shimmer>{ar ? "بفكر في أفضل مساعدة..." : "Thinking of the best way to help..."}</Shimmer>
                 </div>
               )}
               {error && <p className="pow-chat-error">{getErrorMessage(error, ar)}</p>}
