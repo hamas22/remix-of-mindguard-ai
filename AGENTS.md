@@ -11,6 +11,7 @@
 
 ## PowLink frontend
 - Keep dog-welfare presentation in shared PowLink views with thin TanStack route wrappers; public preview pages use AppShell and existing account routes retain their authentication gate. This avoids duplicating the bilingual design.
-- Keep sample dog records separate from live account data and explicitly label sample records; frontend report and adoption previews must not claim real submission. This prevents confusing prototype content with operational rescue data.
+- Keep sample dog records separate from live account data; dog reports are real rows saved only by signed-in users with photos in private storage, while adoption and volunteer forms remain previews. This keeps live reports trustworthy.
+- Nearby clinic/shelter lookup uses free OpenStreetMap services server-side, and lost-dog photo matching runs in an authenticated server function. This keeps keys private and avoids paid map providers.
 - Use the existing language provider for Arabic-first, persisted Arabic/English switching and document direction. This keeps all screens consistent without hydration differences.
 - Keep the PowLink assistant as one conversation persisted only in browser storage, with all model calls and safety instructions server-side. This preserves user choice and keeps credentials private.
