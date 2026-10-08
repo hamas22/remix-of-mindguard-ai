@@ -6,8 +6,8 @@ import { findNearbyPlaces, geocodeAddress } from "@/lib/places.server";
 
 import { createPowLinkResponse } from "@/lib/ai/responses";
 
-const MODEL = "google/gemini-3.8-flash";
-const MAX_MESSAGES = 60;
+const MODEL = "google/gemini-2.5-flash";
+const MAX_MESSAGES = 12;
 
 const INSTRUCTIONS = `أنت مساعد PowLink، منصة مصرية لرعاية الكلاب البلدي. العربية هي لغتك الافتراضية، وتجيب بالإنجليزية إذا كتب المستخدم بالإنجليزية.
 
@@ -43,14 +43,8 @@ export const Route = createFileRoute("/api/chat")({
           if (!Array.isArray(body.messages) || body.messages.length === 0) {
             return Response.json({ message: "الرسالة غير صالحة." }, { status: 400 });
           }
-          if (body.messages.length > MAX_MESSAGES) {
-            return Response.json(
-              { message: "المحادثة طويلة جدًا. امسحي المحادثة وابدئي من جديد." },
-              { status: 400 },
-            );
-          }
-
-          const messages = await validateUIMessages({ messages: body.messages });
+          // Send only the last 12 messages to keep context while keeping cost and latency low.
+          const messages = await validateUIMessages({ messages: body.messages.slice(-MAX_MESSAGES) });
           const lovableKey = process.env.LOVABLE_API_KEY;
           const geminiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_GENERATIVE_AI_API_KEY;
           const openaiKey = process.env.OPENAI_API_KEY;
