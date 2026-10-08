@@ -4,7 +4,7 @@ import { MessageCircle, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import mascot from "@/assets/powlink-chat-mascot.png.asset.json";
+const mascot = { url: "/powlink-chat-mascot.png" };
 import {
   Conversation,
   ConversationContent,
