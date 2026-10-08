@@ -15,3 +15,4 @@
 - Nearby clinic/shelter lookup uses free OpenStreetMap services server-side, and lost-dog photo matching runs in an authenticated server function. This keeps keys private and avoids paid map providers.
 - Use the existing language provider for Arabic-first, persisted Arabic/English switching and document direction. This keeps all screens consistent without hydration differences.
 - Keep the PowLink assistant as one conversation persisted only in browser storage, with all model calls and safety instructions server-side. This preserves user choice and keeps credentials private.
+- The assistant resolves its model route in a fixed free-first order (Lovable AI, then Groq, then OpenRouter) from server secrets, and never exposes a key to the browser. This keeps the preview working with no setup while allowing external hosts like Vercel to run on a free key.
