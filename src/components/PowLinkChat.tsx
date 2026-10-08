@@ -26,7 +26,7 @@ import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/lib/i18n";
 
-const STORAGE_KEY = "powlink-chat-v2";
+const STORAGE_KEY = "powlink-chat-v3";
 const CHAT_ID = "powlink-single-conversation";
 
 function readSavedMessages(): UIMessage[] {
