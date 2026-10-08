@@ -29,8 +29,7 @@ export const analyzeFacialExpression = createServerFn({ method: "POST" })
     });
 
     const lovableKey = process.env.LOVABLE_API_KEY;
-    const geminiKey = process.env.GEMINI_API_KEY;
-    if (!lovableKey && !geminiKey) return fallbackExpression();
+    if (!lovableKey) return fallbackExpression();
 
     const systemPrompt = `You are a facial expression classifier. Given a photo of a person, classify the dominant facial expression into EXACTLY one of these four labels: "Sadness", "Neutral", "Anxiety (proxy: Fear)", "Disgust". Return probabilities for all four labels that sum to 1.0. Be conservative — if no clear face is visible, default to "Neutral" with low confidence. This is for a wellbeing demo, not a medical diagnosis.`;
 

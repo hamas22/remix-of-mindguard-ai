@@ -1,4 +1,3 @@
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { stepCountIs, streamText, type ModelMessage, type ToolSet, type UIMessage } from "ai";
 
@@ -10,42 +9,33 @@ import {
 
 export function createPowLinkResponse(
   request: Request,
-  config: { apiKey: string; model: string; direct?: boolean; gemini?: boolean },
+  config: { apiKey: string; model: string },
   messages: ModelMessage[],
   instructions: string,
   tools?: ToolSet,
 ) {
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
-  const direct = config.direct === true;
-  const gemini = config.gemini === true;
-  const provider = gemini
-    ? null
-    : direct
-      ? createOpenAI({ apiKey: config.apiKey })
-      : createOpenAI({
-          baseURL: "https://ai.gateway.lovable.dev/v1",
-          apiKey: config.apiKey,
-          headers: {
-            "Lovable-API-Key": config.apiKey,
-            "X-Lovable-AIG-SDK": "vercel-ai-sdk",
-          },
-          fetch: runIdFetch.fetch,
-        });
-  const google = gemini ? createGoogleGenerativeAI({ apiKey: config.apiKey }) : null;
+  const provider = createOpenAI({
+    baseURL: "https://ai.gateway.lovable.dev/v1",
+    apiKey: config.apiKey,
+    headers: {
+      "Lovable-API-Key": config.apiKey,
+      "X-Lovable-AIG-SDK": "vercel-ai-sdk",
+    },
+    fetch: runIdFetch.fetch,
+  });
 
   const result = streamText({
-    model: google ? google(config.model) : direct ? provider!.responses(config.model) : provider!.chat(config.model),
+    model: provider.chat(config.model),
     instructions,
     messages,
     tools,
     stopWhen: stepCountIs(5),
     abortSignal: request.signal,
     maxRetries: 2,
-    providerOptions: gemini
-      ? undefined
-      : {
-          openai: { store: false },
-        },
+    providerOptions: {
+      openai: { store: false },
+    },
   });
 
   return {
@@ -55,10 +45,7 @@ export function createPowLinkResponse(
         sendReasoning: false,
         onError: (error) => getSafeAiError(error),
       });
-      // Only the Lovable gateway path goes through runIdFetch; other providers would wait forever.
-      return gemini || direct
-        ? Promise.resolve(streamResponse)
-        : withLovableAiGatewayRunIdHeader(streamResponse, runIdFetch);
+      return withLovableAiGatewayRunIdHeader(streamResponse, runIdFetch);
     },
   };
 }
