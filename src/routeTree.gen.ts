@@ -28,6 +28,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as DogsIdRouteImport } from './routes/dogs.$id'
 import { Route as AuthenticatedResultsIdRouteImport } from './routes/_authenticated/results.$id'
 
@@ -125,6 +126,11 @@ const AuthenticatedResourcesRoute = AuthenticatedResourcesRouteImport.update({
   path: '/resources',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DogsIdRoute = DogsIdRouteImport.update({
   id: '/dogs/$id',
   path: '/dogs/$id',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/history': typeof AuthenticatedHistoryRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/resources': typeof AuthenticatedResourcesRoute
+  '/api/chat': typeof ApiChatRoute
   '/dogs/$id': typeof DogsIdRoute
   '/results/$id': typeof AuthenticatedResultsIdRoute
 }
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/history': typeof AuthenticatedHistoryRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/resources': typeof AuthenticatedResourcesRoute
+  '/api/chat': typeof ApiChatRoute
   '/dogs/$id': typeof DogsIdRoute
   '/results/$id': typeof AuthenticatedResultsIdRoute
 }
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/resources': typeof AuthenticatedResourcesRoute
+  '/api/chat': typeof ApiChatRoute
   '/dogs/$id': typeof DogsIdRoute
   '/_authenticated/results/$id': typeof AuthenticatedResultsIdRoute
 }
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/profile'
     | '/resources'
+    | '/api/chat'
     | '/dogs/$id'
     | '/results/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/profile'
     | '/resources'
+    | '/api/chat'
     | '/dogs/$id'
     | '/results/$id'
   id:
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/_authenticated/history'
     | '/_authenticated/profile'
     | '/_authenticated/resources'
+    | '/api/chat'
     | '/dogs/$id'
     | '/_authenticated/results/$id'
   fileRoutesById: FileRoutesById
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   SheltersRoute: typeof SheltersRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VolunteersRoute: typeof VolunteersRoute
+  ApiChatRoute: typeof ApiChatRoute
   DogsIdRoute: typeof DogsIdRoute
 }
 
@@ -426,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedResourcesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dogs/$id': {
       id: '/dogs/$id'
       path: '/dogs/$id'
@@ -480,6 +500,7 @@ const rootRouteChildren: RootRouteChildren = {
   SheltersRoute: SheltersRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   VolunteersRoute: VolunteersRoute,
+  ApiChatRoute: ApiChatRoute,
   DogsIdRoute: DogsIdRoute,
 }
 export const routeTree = rootRouteImport

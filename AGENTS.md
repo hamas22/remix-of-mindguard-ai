@@ -13,3 +13,4 @@
 - Keep dog-welfare presentation in shared PowLink views with thin TanStack route wrappers; public preview pages use AppShell and existing account routes retain their authentication gate. This avoids duplicating the bilingual design.
 - Keep sample dog records separate from live account data and explicitly label sample records; frontend report and adoption previews must not claim real submission. This prevents confusing prototype content with operational rescue data.
 - Use the existing language provider for Arabic-first, persisted Arabic/English switching and document direction. This keeps all screens consistent without hydration differences.
+- Keep the PowLink assistant as one conversation persisted only in browser storage, with all model calls and safety instructions server-side. This preserves user choice and keeps credentials private.
