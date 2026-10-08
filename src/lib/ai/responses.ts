@@ -9,13 +9,14 @@ import {
 
 export function createPowLinkResponse(
   request: Request,
-  config: { apiKey: string; model: string },
+  config: { apiKey: string; model: string; direct?: boolean },
   messages: ModelMessage[],
   instructions: string,
   tools?: ToolSet,
 ) {
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
-  const provider = createOpenAI({
+  const direct = config.direct === true;
+  const provider = direct ? createOpenAI({ apiKey: config.apiKey }) : createOpenAI({
     baseURL: "https://ai.gateway.lovable.dev/v1",
     apiKey: config.apiKey,
     headers: {
