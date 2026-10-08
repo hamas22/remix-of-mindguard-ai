@@ -45,12 +45,7 @@ export const Route = createFileRoute("/api/chat")({
           }
           // Send only the last 12 messages to keep context while keeping cost and latency low.
           const messages = await validateUIMessages({ messages: body.messages.slice(-MAX_MESSAGES) });
-          const lovableKey = process.env.LOVABLE_API_KEY;
-          const geminiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-          const openaiKey = process.env.OPENAI_API_KEY;
-          const apiKey = lovableKey ?? geminiKey ?? openaiKey;
-          const gemini = !lovableKey && !!geminiKey;
-          const direct = !lovableKey && !geminiKey && !!openaiKey;
+          const apiKey = process.env.LOVABLE_API_KEY;
           if (!apiKey) {
             return Response.json(
               { message: "مساعد PowLink غير مُهيأ حاليًا." },
@@ -61,16 +56,7 @@ export const Route = createFileRoute("/api/chat")({
           const modelMessages = await convertToModelMessages(messages);
           const call = createPowLinkResponse(
             request,
-            {
-              apiKey,
-              model: gemini
-                ? (process.env.GEMINI_MODEL ?? "gemini-3.8-flash")
-                : direct
-                  ? (process.env.OPENAI_MODEL ?? "gpt-4.1-mini")
-                  : MODEL,
-              direct,
-              gemini,
-            },
+            { apiKey, model: MODEL },
             modelMessages,
             INSTRUCTIONS,
             {

@@ -29,8 +29,7 @@ export const analyzeFacialExpression = createServerFn({ method: "POST" })
     });
 
     const lovableKey = process.env.LOVABLE_API_KEY;
-    const geminiKey = process.env.GEMINI_API_KEY;
-    if (!lovableKey && !geminiKey) return fallbackExpression();
+    if (!lovableKey) return fallbackExpression();
 
     const systemPrompt = `You are a facial expression classifier. Given a photo of a person, classify the dominant facial expression into EXACTLY one of these four labels: "Sadness", "Neutral", "Anxiety (proxy: Fear)", "Disgust". Return probabilities for all four labels that sum to 1.0. Be conservative — if no clear face is visible, default to "Neutral" with low confidence. This is for a wellbeing demo, not a medical diagnosis.`;
 
@@ -50,8 +49,8 @@ export const analyzeFacialExpression = createServerFn({ method: "POST" })
       };
     };
 
-    // ---- Path A: Lovable AI Gateway (OpenAI-compatible) ----
-    if (lovableKey) {
+    // ---- Lovable AI Gateway (OpenAI-compatible) ----
+    {
       const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
         method: "POST",
         headers: { "Lovable-API-Key": lovableKey, "Content-Type": "application/json" },
@@ -109,40 +108,4 @@ export const analyzeFacialExpression = createServerFn({ method: "POST" })
       if (!call?.function?.arguments) throw new Error("AI did not return a classification.");
       return parseResult(JSON.parse(call.function.arguments));
     }
-
-    // ---- Path B: Google Gemini API (native) — used on Vercel ----
-    // Fetch the image and inline it as base64 for Gemini.
-    const imgRes = await fetch(data.imageUrl);
-    if (!imgRes.ok) throw new Error(`Failed to fetch image (${imgRes.status})`);
-    const mimeType = imgRes.headers.get("content-type")?.split(";")[0] || "image/jpeg";
-    const buf = await imgRes.arrayBuffer();
-    const b64 = Buffer.from(buf).toString("base64");
-
-    const gRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemPrompt }] },
-          contents: [{
-            role: "user",
-            parts: [
-              { text: "Classify the facial expression in this image. Respond ONLY with JSON: {\"label\":\"<one of the 4>\",\"probs\":{\"Sadness\":n,\"Neutral\":n,\"Anxiety (proxy: Fear)\":n,\"Disgust\":n}}" },
-              { inline_data: { mime_type: mimeType, data: b64 } },
-            ],
-          }],
-          generationConfig: { responseMimeType: "application/json", temperature: 0.2 },
-        }),
-      },
-    );
-
-    if (!gRes.ok) {
-      const body = await gRes.text().catch(() => "");
-      throw new Error(`Gemini error ${gRes.status}: ${body.slice(0, 200)}`);
-    }
-    const gJson = await gRes.json();
-    const text = gJson?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) throw new Error("Gemini did not return a classification.");
-    return parseResult(JSON.parse(text));
   });
