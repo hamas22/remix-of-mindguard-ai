@@ -49,15 +49,17 @@ export function createPowLinkResponse(
   });
 
   return {
-    response: (originalMessages: UIMessage[]) =>
-      withLovableAiGatewayRunIdHeader(
-        result.toUIMessageStreamResponse({
-          originalMessages,
-          sendReasoning: false,
-          onError: (error) => getSafeAiError(error),
-        }),
-        runIdFetch,
-      ),
+    response: (originalMessages: UIMessage[]) => {
+      const streamResponse = result.toUIMessageStreamResponse({
+        originalMessages,
+        sendReasoning: false,
+        onError: (error) => getSafeAiError(error),
+      });
+      // Only the Lovable gateway path goes through runIdFetch; other providers would wait forever.
+      return gemini || direct
+        ? Promise.resolve(streamResponse)
+        : withLovableAiGatewayRunIdHeader(streamResponse, runIdFetch);
+    },
   };
 }
 
