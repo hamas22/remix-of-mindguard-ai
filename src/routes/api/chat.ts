@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, validateUIMessages, type UIMessage } from "ai";
+import { convertToModelMessages, tool, validateUIMessages, type UIMessage } from "ai";
+import { z } from "zod";
+
+import { findNearbyPlaces, geocodeAddress } from "@/lib/places.server";
 
 import { createPowLinkResponse } from "@/lib/ai/responses";
 
@@ -13,7 +16,7 @@ const INSTRUCTIONS = `أنت مساعد PowLink، منصة مصرية لرعاي
 - عند سؤال المستخدم عن طريقة الاستخدام، أعطه خطوات قصيرة ومباشرة واذكر اسم الصفحة المناسبة.
 - لا تذكر للمستخدم أن PowLink نموذج أو مشروع تخرج، ولا تستخدم عبارات مثل «بلاغ تجريبي» أو «لا يستدعي إنقاذًا فعليًا» أو «جهة إنقاذ لم تستلمه» في ردودك.
 - لا تدّعِ أن إجراءً تم تنفيذه أو أن بلاغًا وصل لجهة ما. اشرح الخطوات المتاحة داخل المنصة فقط، دون إضافة تنبيهات عن حالة المشروع.
-- لا تدّعِ معرفة أقرب عيادة أو جمعية دون منطقة واضحة وبيانات متاحة. وجّه المستخدم إلى صفحة العيادات أو مراكز الإيواء.
+- إذا طلب المستخدم ترشيح أقرب عيادة بيطرية أو جمعية/مركز إيواء: اطلب عنوانه أو منطقته (الحي والمدينة) إن لم يذكرها، ثم استخدم أداة find_nearby_places فورًا. اعرض أقرب النتائج (حتى 5) في قائمة: الاسم، المسافة التقريبية بالكيلومتر، العنوان والهاتف إن وُجدا، ورابط [فتح على الخريطة](الرابط). لا تخترع أماكن أو أرقامًا غير موجودة في نتيجة الأداة. انصح بالاتصال قبل الذهاب للتأكد من المواعيد. إذا لم تجد الأداة نتائج، اطلب عنوانًا أوضح ووجّه إلى [العيادات والعلاج](/clinics) أو [مراكز الإيواء](/shelters).
 
 الفرز الأولي للحالات:
 - إذا ذكر المستخدم كلبًا مصابًا أو محتاجًا للمساعدة، اسأل سؤالًا أو سؤالين قصيرين في كل رد عن: النزيف، القدرة على الحركة أو الوقوف، حادث أو دهس، اشتباه تسمم، صعوبة التنفس، وجوده في مكان خطر، أو تدهور سريع.
@@ -58,6 +61,26 @@ export const Route = createFileRoute("/api/chat")({
             { apiKey, model: MODEL },
             modelMessages,
             INSTRUCTIONS,
+            {
+              find_nearby_places: tool({
+                description: "Find the nearest veterinary clinics and/or animal shelters in Egypt to an address, using OpenStreetMap.",
+                inputSchema: z.object({
+                  address: z.string().min(2).max(200).describe("User address or area, e.g. 'المعادي، القاهرة'"),
+                  kind: z.enum(["clinic", "shelter", "both"]),
+                }),
+                execute: async ({ address, kind }) => {
+                  try {
+                    const point = await geocodeAddress(address);
+                    if (!point) return { found: false, reason: "address_not_found", places: [] };
+                    const places = await findNearbyPlaces(point, kind);
+                    return { found: places.length > 0, resolvedAddress: point.label, places };
+                  } catch (error) {
+                    console.error("Nearby places lookup failed", error);
+                    return { found: false, reason: "search_unavailable", places: [] };
+                  }
+                },
+              }),
+            },
           );
           return call.response(messages);
         } catch (error) {
