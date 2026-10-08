@@ -1,3 +1,4 @@
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { stepCountIs, streamText, type ModelMessage, type ToolSet, type UIMessage } from "ai";
 
