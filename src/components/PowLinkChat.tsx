@@ -26,7 +26,7 @@ import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/lib/i18n";
 
-const STORAGE_KEY = "powlink-chat-v2";
+const STORAGE_KEY = "powlink-chat-v3";
 const CHAT_ID = "powlink-single-conversation";
 
 function readSavedMessages(): UIMessage[] {
@@ -178,7 +178,7 @@ export function PowLinkChat() {
               {status === "submitted" && (
                 <div className="pow-chat-typing" aria-live="polite">
                   <img src={mascot.url} alt="" width={25} height={25} />
-                  <Shimmer>{ar ? "بيكتب..." : "Typing..."}</Shimmer>
+                  <Shimmer>{ar ? "بفكر في أفضل مساعدة..." : "Thinking of the best way to help..."}</Shimmer>
                 </div>
               )}
               {error && <p className="pow-chat-error">{getErrorMessage(error, ar)}</p>}
