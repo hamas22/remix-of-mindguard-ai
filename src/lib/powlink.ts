@@ -7,5 +7,5 @@ export const dogs = [
  {id:'PL-1046', name:['روكي','Rocky'], status:'adoption', area:['مدينة نصر، القاهرة','Nasr City, Cairo'], image:dogBlack, color:['أسود وبني • متوسط الحجم','Black & tan • Medium'], age:['٣ سنوات تقريبًا','About 3 years']},
  {id:'PL-1045', name:['سكر','Sokkar'], status:'shelter', area:['الجيزة','Giza'], image:dogWhite, color:['أبيض • متوسط الحجم','White • Medium'], age:['سنتان تقريبًا','About 2 years']},
 ];
-const OG_IMAGE='https://id-preview--4eaf8907-91eb-42f4-a39d-d3852ab92507.lovable.app/og-image.png';
+const OG_IMAGE='https://powlink.vercel.app/og-image.png';
 export function pageHead(title:string, description='منصة PowLink لرعاية الكلاب البلدي ومتابعة البلاغات والإنقاذ والعلاج والإيواء والتبني.') {return {meta:[{title:`${title} | PowLink`},{name:'description',content:description},{property:'og:title',content:`${title} | PowLink`},{property:'og:description',content:description},{property:'og:type',content:'website'},{property:'og:image',content:OG_IMAGE},{name:'twitter:card',content:'summary_large_image'},{name:'twitter:image',content:OG_IMAGE}]};}
