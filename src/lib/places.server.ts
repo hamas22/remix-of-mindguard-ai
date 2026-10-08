@@ -65,24 +65,25 @@ export async function findNearbyPlaces(
       elements: { lat?: number; lon?: number; center?: { lat: number; lon: number }; tags?: Record<string, string> }[];
     };
     const places = json.elements
-      .map((el) => {
+      .map((el): NearbyPlace | null => {
         const lat = el.lat ?? el.center?.lat;
         const lng = el.lon ?? el.center?.lon;
         const tags = el.tags ?? {};
         if (lat == null || lng == null) return null;
-        const name = tags["name:ar"] ?? tags.name ?? tags["name:en"];
+        const name: string | undefined = tags["name:ar"] ?? tags.name ?? tags["name:en"];
         if (!name) return null;
         const street = [tags["addr:street"], tags["addr:suburb"] ?? tags["addr:district"], tags["addr:city"]]
           .filter(Boolean)
           .join("، ");
-        return {
+        const place: NearbyPlace = {
           name,
           kind: tags.amenity === "animal_shelter" ? "shelter" : "clinic",
           distanceKm: Math.round(distanceKm(point, { lat, lng }) * 10) / 10,
           address: street || null,
           phone: tags.phone ?? tags["contact:phone"] ?? null,
           mapsUrl: `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
-        } satisfies NearbyPlace;
+        };
+        return place;
       })
       .filter((p): p is NearbyPlace => p !== null)
       .sort((a, b) => a.distanceKm - b.distanceKm);
