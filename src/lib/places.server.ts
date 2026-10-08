@@ -44,6 +44,26 @@ function distanceKm(a: { lat: number; lng: number }, b: { lat: number; lng: numb
   return 6371 * 2 * Math.asin(Math.sqrt(h));
 }
 
+const OVERPASS_MIRRORS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
+];
+
+async function overpass(query: string) {
+  let last = 0;
+  for (const url of OVERPASS_MIRRORS) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded" },
+      body: `data=${encodeURIComponent(query)}`,
+    });
+    if (res.ok) return res;
+    last = res.status;
+  }
+  throw new Error(`Places search failed (${last})`);
+}
+
 export async function findNearbyPlaces(
   point: { lat: number; lng: number },
   kind: "clinic" | "shelter" | "both",
@@ -55,12 +75,7 @@ export async function findNearbyPlaces(
     if (kind !== "shelter") filters.push(`nwr["amenity"="veterinary"](around:${radius},${point.lat},${point.lng});`);
     if (kind !== "clinic") filters.push(`nwr["amenity"="animal_shelter"](around:${radius},${point.lat},${point.lng});`);
     const query = `[out:json][timeout:20];(${filters.join("")});out center tags 60;`;
-    const res = await fetch("https://overpass-api.de/api/interpreter", {
-      method: "POST",
-      headers: { "User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded" },
-      body: `data=${encodeURIComponent(query)}`,
-    });
-    if (!res.ok) throw new Error(`Places search failed (${res.status})`);
+    const res = await overpass(query);
     const json = (await res.json()) as {
       elements: { lat?: number; lon?: number; center?: { lat: number; lon: number }; tags?: Record<string, string> }[];
     };
