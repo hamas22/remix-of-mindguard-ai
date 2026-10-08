@@ -97,12 +97,12 @@ export function PowLinkChat() {
   return (
     <div className="pow-chat" dir={ar ? "rtl" : "ltr"}>
       {open ? (
-        <section className="pow-chat-panel" aria-label={ar ? "مساعد PowLink" : "PowLink assistant"}>
+        <section className="pow-chat-panel" aria-label={ar ? "مساعد PawLink" : "PawLink assistant"}>
           <header className="pow-chat-header">
             <div className="pow-chat-agent">
               <img src={mascot.url} alt="" width={52} height={52} />
               <div>
-                <strong>{ar ? "مساعد PowLink" : "PowLink Assistant"}</strong>
+                <strong>{ar ? "مساعد PawLink" : "PawLink Assistant"}</strong>
                 <span><i />{ar ? "متاح للمساعدة" : "Ready to help"}</span>
               </div>
             </div>
@@ -132,7 +132,7 @@ export function PowLinkChat() {
               {messages.length === 0 && (
                 <div className="pow-chat-welcome">
                   <img src={mascot.url} alt="" width={86} height={86} />
-                  <h2>{ar ? "أهلًا! أنا مساعد PowLink" : "Hi! I’m the PowLink Assistant"}</h2>
+                  <h2>{ar ? "أهلًا! أنا مساعد PawLink" : "Hi! I’m the PawLink Assistant"}</h2>
                   <p>
                     {ar
                       ? "اسألني عن البلاغات، الكلاب المفقودة، التبنّي، أو ماذا تفعل لو وجدت كلبًا يحتاج مساعدة."
@@ -162,7 +162,7 @@ export function PowLinkChat() {
                   {message.role === "assistant" && (
                     <span className="pow-chat-role">
                       <img src={mascot.url} alt="" width={26} height={26} />
-                      {ar ? "مساعد PowLink" : "PowLink Assistant"}
+                      {ar ? "مساعد PawLink" : "PawLink Assistant"}
                     </span>
                   )}
                   <MessageContent className={message.role === "assistant" ? "pow-chat-assistant-bubble" : undefined}>
@@ -223,7 +223,7 @@ export function PowLinkChat() {
           className="pow-chat-launcher"
           size="icon"
           onClick={() => setOpen(true)}
-          aria-label={ar ? "فتح مساعد PowLink" : "Open PowLink Assistant"}
+          aria-label={ar ? "فتح مساعد PawLink" : "Open PawLink Assistant"}
         >
           <img src={mascot.url} alt="" width={98} height={98} />
           <span><MessageCircle />{ar ? "اسألني" : "Ask me"}</span>

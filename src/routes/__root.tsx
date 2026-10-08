@@ -81,10 +81,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PowLink — من أجل حياة أفضل لكل كلب" },
+      { title: "PawLink — من أجل حياة أفضل لكل كلب" },
       { name: "description", content: "منصة لرعاية الكلاب البلدي ومتابعة الإنقاذ والعلاج والإيواء والتبني." },
-      { name: "author", content: "PowLink" },
-      { property: "og:title", content: "PowLink — من أجل حياة أفضل لكل كلب" },
+      { name: "author", content: "PawLink" },
+      { property: "og:title", content: "PawLink — من أجل حياة أفضل لكل كلب" },
       { property: "og:description", content: "منصة لرعاية الكلاب البلدي ومتابعة الإنقاذ والعلاج والإيواء والتبني." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
