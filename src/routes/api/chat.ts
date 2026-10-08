@@ -4,9 +4,8 @@ import { z } from "zod";
 
 import { findNearbyPlaces, geocodeAddress } from "@/lib/places.server";
 
-import { createPowLinkResponse } from "@/lib/ai/responses";
+import { createPowLinkResponse, resolvePowLinkProvider } from "@/lib/ai/responses";
 
-const MODEL = "google/gemini-2.5-flash";
 const MAX_MESSAGES = 12;
 
 const INSTRUCTIONS = `أنت مساعد PowLink، منصة مصرية لرعاية الكلاب البلدي. العربية هي لغتك الافتراضية، وتجيب بالإنجليزية إذا كتب المستخدم بالإنجليزية.
@@ -45,10 +44,13 @@ export const Route = createFileRoute("/api/chat")({
           }
           // Send only the last 12 messages to keep context while keeping cost and latency low.
           const messages = await validateUIMessages({ messages: body.messages.slice(-MAX_MESSAGES) });
-          const apiKey = process.env.LOVABLE_API_KEY;
-          if (!apiKey) {
+          const provider = resolvePowLinkProvider();
+          if (!provider) {
             return Response.json(
-              { message: "مساعد PowLink غير مُهيأ حاليًا." },
+              {
+                message:
+                  "مساعد PowLink غير مٌهيأ حاليًا: أضيفي GROQ_API_KEY أو OPENROUTER_API_KEY أو LOVABLE_API_KEY.",
+              },
               { status: 401 },
             );
           }
@@ -56,7 +58,7 @@ export const Route = createFileRoute("/api/chat")({
           const modelMessages = await convertToModelMessages(messages);
           const call = createPowLinkResponse(
             request,
-            { apiKey, model: MODEL },
+            provider,
             modelMessages,
             INSTRUCTIONS,
             {
