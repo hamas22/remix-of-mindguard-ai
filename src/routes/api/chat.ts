@@ -6,7 +6,7 @@ import { findNearbyPlaces, geocodeAddress } from "@/lib/places.server";
 
 import { createPowLinkResponse } from "@/lib/ai/responses";
 
-const MODEL = "google/gemini-3.8-flash";
+const MODEL = "google/gemini-2.5-flash";
 const MAX_MESSAGES = 12;
 
 const INSTRUCTIONS = `أنت مساعد PowLink، منصة مصرية لرعاية الكلاب البلدي. العربية هي لغتك الافتراضية، وتجيب بالإنجليزية إذا كتب المستخدم بالإنجليزية.
