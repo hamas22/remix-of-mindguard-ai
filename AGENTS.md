@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## PowLink frontend
+- Preserve existing asset URLs, storage keys, environment names and internal identifiers when correcting visible branding; this keeps saved preferences, conversations and deployments compatible.
 - Keep dog-welfare presentation in shared PowLink views with thin TanStack route wrappers; public preview pages use AppShell and existing account routes retain their authentication gate. This avoids duplicating the bilingual design.
 - Keep sample dog records separate from live account data; dog reports are real rows saved only by signed-in users with photos in private storage, while adoption and volunteer forms remain previews. This keeps live reports trustworthy.
 - Nearby clinic/shelter lookup uses free OpenStreetMap services server-side, and lost-dog photo matching runs in an authenticated server function. This keeps keys private and avoids paid map providers.
