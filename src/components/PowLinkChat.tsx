@@ -26,7 +26,7 @@ import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/lib/i18n";
 
-const STORAGE_KEY = "powlink-chat-v1";
+const STORAGE_KEY = "powlink-chat-v2";
 const CHAT_ID = "powlink-single-conversation";
 
 function readSavedMessages(): UIMessage[] {
@@ -165,7 +165,7 @@ export function PowLinkChat() {
                       {ar ? "مساعد PowLink" : "PowLink Assistant"}
                     </span>
                   )}
-                  <MessageContent>
+                  <MessageContent className={message.role === "assistant" ? "pow-chat-assistant-bubble" : undefined}>
                     {message.parts.map((part, index) =>
                       part.type === "text" ? (
                         <MessageResponse key={`${message.id}-${index}`}>{part.text}</MessageResponse>
