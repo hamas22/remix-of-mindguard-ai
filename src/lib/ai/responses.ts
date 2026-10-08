@@ -10,40 +10,48 @@ import {
 
 export function createPowLinkResponse(
   request: Request,
-  config: { apiKey: string; model: string; direct?: boolean },
+  config: { apiKey: string; model: string; direct?: boolean; gemini?: boolean },
   messages: ModelMessage[],
   instructions: string,
   tools?: ToolSet,
 ) {
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
   const direct = config.direct === true;
-  const provider = direct ? createOpenAI({ apiKey: config.apiKey }) : createOpenAI({
-    baseURL: "https://ai.gateway.lovable.dev/v1",
-    apiKey: config.apiKey,
-    headers: {
-      "Lovable-API-Key": config.apiKey,
-      "X-Lovable-AIG-SDK": "vercel-ai-sdk",
-    },
-    fetch: runIdFetch.fetch,
-  });
+  const gemini = config.gemini === true;
+  const provider = gemini
+    ? null
+    : direct
+      ? createOpenAI({ apiKey: config.apiKey })
+      : createOpenAI({
+          baseURL: "https://ai.gateway.lovable.dev/v1",
+          apiKey: config.apiKey,
+          headers: {
+            "Lovable-API-Key": config.apiKey,
+            "X-Lovable-AIG-SDK": "vercel-ai-sdk",
+          },
+          fetch: runIdFetch.fetch,
+        });
+  const google = gemini ? createGoogleGenerativeAI({ apiKey: config.apiKey }) : null;
 
   const result = streamText({
-    model: provider.responses(config.model),
+    model: google ? google(config.model) : provider!.responses(config.model),
     instructions,
     messages,
     tools,
     stopWhen: stepCountIs(5),
     abortSignal: request.signal,
     maxRetries: 2,
-    providerOptions: {
-      openai: direct ? { store: false } : {
-        store: false,
-        forceReasoning: true,
-        reasoningEffort: "low",
-        reasoningSummary: "auto",
-        include: ["reasoning.encrypted_content"],
-      },
-    },
+    providerOptions: gemini
+      ? undefined
+      : {
+          openai: direct ? { store: false } : {
+            store: false,
+            forceReasoning: true,
+            reasoningEffort: "low",
+            reasoningSummary: "auto",
+            include: ["reasoning.encrypted_content"],
+          },
+        },
   });
 
   return {
