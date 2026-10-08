@@ -35,7 +35,7 @@ export function createPowLinkResponse(
     abortSignal: request.signal,
     maxRetries: 2,
     providerOptions: {
-      openai: {
+      openai: direct ? { store: false } : {
         store: false,
         forceReasoning: true,
         reasoningEffort: "low",
