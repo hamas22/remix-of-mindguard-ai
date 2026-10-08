@@ -34,7 +34,7 @@ export function createPowLinkResponse(
   const google = gemini ? createGoogleGenerativeAI({ apiKey: config.apiKey }) : null;
 
   const result = streamText({
-    model: google ? google(config.model) : provider!.responses(config.model),
+    model: google ? google(config.model) : direct ? provider!.responses(config.model) : provider!.chat(config.model),
     instructions,
     messages,
     tools,
@@ -44,13 +44,7 @@ export function createPowLinkResponse(
     providerOptions: gemini
       ? undefined
       : {
-          openai: direct ? { store: false } : {
-            store: false,
-            forceReasoning: true,
-            reasoningEffort: "low",
-            reasoningSummary: "auto",
-            include: ["reasoning.encrypted_content"],
-          },
+          openai: { store: false },
         },
   });
 
