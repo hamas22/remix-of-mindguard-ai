@@ -3,3 +3,4 @@
 - [x] Add matching dog cases, reports, treatment, shelter, adoption, volunteer and resources screens.
 - [x] Verify navigation, language switching, forms and small-screen layout.
 - [ ] Add and verify the floating bilingual PowLink assistant with one browser-saved conversation.
+- [ ] Move the dashboard welcome copy away from the dog photo, strengthen the logo box border, and add subtle animated dog-themed background details.
