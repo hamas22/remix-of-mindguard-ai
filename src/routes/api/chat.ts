@@ -66,7 +66,7 @@ export const Route = createFileRoute("/api/chat")({
             {
               apiKey,
               model: gemini
-                ? (process.env.GEMINI_MODEL ?? "gemini-2.5-flash")
+                ? (process.env.GEMINI_MODEL ?? "gemini-3.8-flash")
                 : direct
                   ? (process.env.OPENAI_MODEL ?? "gpt-4.1-mini")
                   : MODEL,
