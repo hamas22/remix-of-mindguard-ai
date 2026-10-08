@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText, type ModelMessage } from "ai";
+import { streamText, type ModelMessage, type UIMessage } from "ai";
 
 import {
   createLovableAiGatewayRunIdFetch,
@@ -42,7 +42,7 @@ export function createPowLinkResponse(
   });
 
   return {
-    response: (originalMessages: Parameters<typeof result.toUIMessageStreamResponse>[0] extends { originalMessages?: infer T } ? T : never) =>
+    response: (originalMessages: UIMessage[]) =>
       withLovableAiGatewayRunIdHeader(
         result.toUIMessageStreamResponse({
           originalMessages,
