@@ -62,7 +62,7 @@ export function resolvePowLinkProvider(): PowLinkAiProvider | null {
       apiKey: openRouterKey,
       model: override ?? "meta-llama/llama-3.3-70b-instruct:free",
       baseURL: "https://openrouter.ai/api/v1",
-      headers: { "X-Title": "PowLink" },
+      headers: { "X-Title": "PawLink" },
     };
   }
 
